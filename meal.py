@@ -9,3 +9,10 @@ def get_req(food1= "egg"):
     r = requests.get(url)
     print(r.status_code)  # 200
     return r.json
+if __name__ == "__main__":
+    print('\n Get nutritional requirements\n')
+    food= input("\n Enter food")
+    food_nutrition= get_req(food)
+    
+    print("\n")
+    pprint(food_nutrition)
