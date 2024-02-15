@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset ="UTF-8">
+    <meta name="viewport" content="width= device-width, initial-scale=1.0">
+    <title>Get Nutrition!</title>
+    <link href= "{{ url_for('static', filename='styles/style.css')}}" rel="stylesheet" />
+</head>
+<body>
+    <h1>Get your nutritional requirements now!</h1>
+    <div class="container">
+        <!-- Form for Breakfast Input -->
+        <form action="/process_meal" method="POST">
+            <section class="meal-input">
+                <div class="section-title">Breakfast</div>
+                <div class="input-group">
+                    <label for="breakfast-input">Enter your breakfast items:</label>
+                    <input type="text" id="breakfast-input" name="breakfast" placeholder="E.g., 2 eggs, toast">
+                </div>
+                <button type="submit">Enter</button>
+            </section>
+        </form>
+
+        <!-- Form for Lunch Input -->
+        <form action="/process_meal" method="POST">
+            <section class="meal-input">
+                <div class="section-title">Lunch</div>
+                <div class="input-group">
+                    <label for="lunch-input">Enter your lunch items:</label>
+                    <input type="text" id="lunch-input" name="lunch" placeholder="E.g., Chicken salad">
+                </div>
+                <button type="submit">Enter</button>
+            </section>
+        </form>
+
+        <!-- Form for Dinner Input -->
+        <form action="/process_meal" method="POST">
+            <section class="meal-input">
+                <div class="section-title">Dinner</div>
+                <div class="input-group">
+                    <label for="dinner-input">Enter your dinner items:</label>
+                    <input type="text" id="dinner-input" name="dinner" placeholder="E.g., Grilled salmon, quinoa">
+                </div>
+                <button type="submit">Enter</button>
+            </section>
+        </form>
+
+        <!-- Button to Check Nutrition Levels -->
+        <div class="check-nutrition">
+            <button class="check-nutrition-btn">Check Nutrition Levels</button>
+        </div>
+    </div>
+</body>
+</html>
+</body>
+
+</html>
