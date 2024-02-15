@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset ="UTF-8">
+    <meta name="viewport" content="width= device-width, initial-scale=1.0">
+    <title>Today's nutrition</title>
+    <link href= "{{ url_for('static', filename='styles/style.css')}}" rel="stylesheet" />
+</head>
+<body>
+    <h1>Today's nutrition</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Food Item</th>
+                <th>Calories</th>
+                <th>Total Fat (g)</th>
+                <th>Protein (g)</th>
+                <th>Carbohydrates (g)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.calories }}</td>
+                <td>{{ item.fat_total_g }}</td>
+                <td>{{ item.protein_g }}</td>
+                <td>{{ item.carbohydrates_total_g }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+</body>
+
+</html>
