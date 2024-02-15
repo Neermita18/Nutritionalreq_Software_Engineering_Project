@@ -8,38 +8,39 @@
 </head>
 <body>
     <h1>Get your nutritional requirements now!</h1>
+    <h2> Enter today's food data </h2>
     <div class="container">
-        <!-- Form for Breakfast Input -->
+        <!-- breakfast -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
                 <div class="section-title">Breakfast</div>
                 <div class="input-group">
                     <label for="breakfast-input">Enter your breakfast items:</label>
-                    <input type="text" id="breakfast-input" name="breakfast" placeholder="E.g., 2 eggs, toast">
+                    <input type="text" id="breakfast-input" name="breakfast" placeholder="2 eggs, toast with butter">
                 </div>
                 <button type="submit">Enter</button>
             </section>
         </form>
 
-        <!-- Form for Lunch Input -->
+        <!-- lunch -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
                 <div class="section-title">Lunch</div>
                 <div class="input-group">
                     <label for="lunch-input">Enter your lunch items:</label>
-                    <input type="text" id="lunch-input" name="lunch" placeholder="E.g., Chicken salad">
+                    <input type="text" id="lunch-input" name="lunch" placeholder="Chicken salad">
                 </div>
                 <button type="submit">Enter</button>
             </section>
         </form>
 
-        <!-- Form for Dinner Input -->
+        <!-- dinner -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
                 <div class="section-title">Dinner</div>
                 <div class="input-group">
                     <label for="dinner-input">Enter your dinner items:</label>
-                    <input type="text" id="dinner-input" name="dinner" placeholder="E.g., Grilled salmon, quinoa">
+                    <input type="text" id="dinner-input" name="dinner" placeholder="Grilled salmon, quinoa">
                 </div>
                 <button type="submit">Enter</button>
             </section>
