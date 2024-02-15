@@ -8,14 +8,17 @@ load_dotenv()
 def get_req(food):
     url = f'https://api.calorieninjas.com/v1/nutrition?query='
     response = requests.get(url + food, headers={'X-Api-Key': os.getenv('YOUR_API_KEY')})
+    foodlist=[]
     if response.status_code == requests.codes.ok:
         r= response.text
         print(type(r))
-        print(r)
+        
         JSON= json.loads(r)
         print(JSON)
-        for item in JSON['items']:
-            print(item)
+        for item in JSON["items"]:
+            print(item["name"], item['calories'])
+            
+        
     # Extracting individual nutrient values
             name = item["name"]
             calories = item["calories"]
@@ -23,8 +26,9 @@ def get_req(food):
             protein= item["protein_g"]
             carbs_total = item["carbohydrates_total_g"]
             cholesterol= item["cholesterol_mg"]
-        return name,calories,fat_total,protein,carbs_total,cholesterol
-    
+            # return name,calories,
+            foodlist.append([name, calories, fat_total,protein,carbs_total,cholesterol])
+        return foodlist
     else:
         print("Error:", response.status_code, response.text)
     
@@ -36,9 +40,11 @@ if __name__ == "__main__":
     
     print("\n")
     items= food_nutrition
-    print("name: ", items[0], "cholesterol: ", items[5])
+    print(items)
+    for item in items:
+       print(item)
     
-    # pprint(food_nutrition)
+    # pprint(food_nutrition)S
     
     
 
