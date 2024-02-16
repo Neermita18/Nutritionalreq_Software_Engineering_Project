@@ -36,10 +36,9 @@ def get_req(food):
 if __name__ == "__main__":
     print('\n Get nutritional requirements\n')
     food= input("\n Enter food")
-    food_nutrition= get_req(food)
+    items= get_req(food)
     
     print("\n")
-    items= food_nutrition
     print(items)
     for item in items:
        print(item)

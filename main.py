@@ -8,14 +8,14 @@ app= Flask(__name__)
 @app.route('/index')
 def index():
     return render_template('index.html')
-@app.route('/process_meal', methods=['GET','POST'])
+@app.route('/process_meal', methods=['GET', 'POST'])
 def process_meal():
-    breakfast= request.form.get()
+    breakfast= request.form.get('breakfast')
     food_nutrition=get_req(breakfast)
     return render_template(
-        "food.html",
+        "process_meal.html",
         items= food_nutrition
         
-    )
+  )
 if __name__ == "__main__":
-    serve(app, host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=8000)
