@@ -21,6 +21,17 @@
                 <button type="submit">Enter</button>
             </section>
         </form>
+        <h2>Nutritional Information</h2>
+        {% for food in bitems %}
+            <div class="food-item">
+                <h3>{{ food[0] | capitalize }}</h3>
+                <p>Calories: {{ food[1] }}</p>
+                <p>Fat: {{ food[2] }}g</p>
+                <p>Protein: {{ food[3] }}g</p>
+                <p>Carbs: {{ food[4] }}g</p>
+                <p>Cholesterol: {{ food[5] }}mg</p>
+            </div>
+        {% endfor %}
 
         <!-- lunch -->
         <form action="/process_meal" method="POST">
@@ -33,6 +44,17 @@
                 <button type="submit">Enter</button>
             </section>
         </form>
+        <h2>Nutritional Information</h2>
+        {% for food in litems %}
+            <div class="food-item">
+                <h3>{{ food[0] | capitalize }}</h3>
+                <p>Calories: {{ food[1] }}</p>
+                <p>Fat: {{ food[2] }}g</p>
+                <p>Protein: {{ food[3] }}g</p>
+                <p>Carbs: {{ food[4] }}g</p>
+                <p>Cholesterol: {{ food[5] }}mg</p>
+            </div>
+        {% endfor %}
 
         <!-- dinner -->
         <form action="/process_meal" method="POST">
@@ -45,14 +67,24 @@
                 <button type="submit">Enter</button>
             </section>
         </form>
+        <h2>Nutritional Information</h2>
+        {% for food in ditems %}
+            <div class="food-item">
+                <h3>{{ food[0] | capitalize }}</h3>
+                <p>Calories: {{ food[1] }}</p>
+                <p>Fat: {{ food[2] }}g</p>
+                <p>Protein: {{ food[3] }}g</p>
+                <p>Carbs: {{ food[4] }}g</p>
+                <p>Cholesterol: {{ food[5] }}mg</p>
+            </div>
+        {% endfor %}
 
         <!-- Button to Check Nutrition Levels -->
         <div class="check-nutrition">
             <button class="check-nutrition-btn">Check Nutrition Levels</button>
         </div>
     </div>
-</body>
-</html>
-</body>
 
+    
+</body>
 </html>

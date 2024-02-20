@@ -7,7 +7,7 @@ import json
 load_dotenv()
 def get_req(food):
     url = f'https://api.calorieninjas.com/v1/nutrition?query='
-    response = requests.get(url + food, headers={'X-Api-Key': os.getenv('YOUR_API_KEY')})
+    response = requests.get(url + food, headers={'X-Api-Key': os.getenv('API_KEY')})
     foodlist=[]
     if response.status_code == requests.codes.ok:
         r= response.text

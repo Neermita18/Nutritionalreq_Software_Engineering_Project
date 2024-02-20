@@ -11,10 +11,16 @@ def index():
 @app.route('/process_meal', methods=['GET', 'POST'])
 def process_meal():
     breakfast= request.form.get('breakfast')
-    food_nutrition=get_req(breakfast)
+    # lunch= request.form.get('lunch')
+    # dinner= request.form.get('dinner')
+    breaky=get_req(breakfast)
+    # lunchy=get_req(lunch)
+    # diny=get_req(dinner)
     return render_template(
         "process_meal.html",
-        items= food_nutrition
+        bitems= breaky,
+        # litems= lunchy,
+        # ditems= diny
         
   )
 if __name__ == "__main__":
