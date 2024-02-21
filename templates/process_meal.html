@@ -21,7 +21,8 @@
                 <button type="submit">Enter</button>
             </section>
         </form>
-        <h2>Nutritional Information</h2>
+        {% if bitems %}
+        <h2>Breakfast Nutritional Information</h2>
         {% for food in bitems %}
             <div class="food-item">
                 <h3>{{ food[0] | capitalize }}</h3>
@@ -32,7 +33,7 @@
                 <p>Cholesterol: {{ food[5] }}mg</p>
             </div>
         {% endfor %}
-
+        {% endif %}
         <!-- lunch -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
@@ -44,7 +45,8 @@
                 <button type="submit">Enter</button>
             </section>
         </form>
-        <h2>Nutritional Information</h2>
+        {% if litems %}
+        <h2>Lunch Nutritional Information</h2>
         {% for food in litems %}
             <div class="food-item">
                 <h3>{{ food[0] | capitalize }}</h3>
@@ -55,6 +57,7 @@
                 <p>Cholesterol: {{ food[5] }}mg</p>
             </div>
         {% endfor %}
+        {% endif %}
 
         <!-- dinner -->
         <form action="/process_meal" method="POST">
@@ -67,7 +70,8 @@
                 <button type="submit">Enter</button>
             </section>
         </form>
-        <h2>Nutritional Information</h2>
+        {% if ditems %}
+        <h2>Dinner Nutritional Information</h2>
         {% for food in ditems %}
             <div class="food-item">
                 <h3>{{ food[0] | capitalize }}</h3>
@@ -78,6 +82,7 @@
                 <p>Cholesterol: {{ food[5] }}mg</p>
             </div>
         {% endfor %}
+        {% endif %}
 
         <!-- Button to Check Nutrition Levels -->
         <div class="check-nutrition">
