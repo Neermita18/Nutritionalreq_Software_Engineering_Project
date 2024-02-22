@@ -1,38 +1,39 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from meal import get_req
 from waitress import serve
 import requests
 app= Flask(__name__)
-
+app.secret_key='heudbw2735snd0182bdh376ch3865271'
 @app.route('/')
 @app.route('/index')
 def index():
+    session.clear()
     return render_template('index.html')
 @app.route('/process_meal', methods=['GET', 'POST'])
 def process_meal():
-    breaky=None
-    lunchy= None
-    diny= None
+   
     if request.method == 'POST':
+        meals = session.get('meals', {'breakfast': None, 'lunch': None, 'dinner': None})
         if 'breakfast' in request.form:
             breakfast= request.form.get('breakfast')
-    
-        
-            breaky=get_req(breakfast)
+            meals['breakfast']=get_req(breakfast)
+           
         elif 'lunch' in request.form:
             lunch= request.form.get('lunch')
-            lunchy=get_req(lunch)
+            meals['lunch']=get_req(lunch)
             
         elif 'dinner' in request.form:
             dinner= request.form.get('dinner')
-            diny=get_req(dinner)
+            meals['dinner']=get_req(dinner)
+        session['meals']=meals    
+        session.modified= True
         
     return render_template(
         "process_meal.html",
-        bitems= breaky,
-        litems= lunchy,
-        ditems= diny
+        bitems= meals['breakfast'],
+        litems= meals['lunch'],
+        ditems= meals['dinner']
         
   )
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=8000, debug= True)
