@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
+    background-color: #a7a7eb;
     color: #333;
     line-height: 1.6;
     margin: 0;
@@ -19,7 +19,7 @@ header {
     color: #fff;
     padding-top: 30px;
     min-height: 70px;
-    border-bottom: #0779e4 3px solid;
+    border-bottom: #1d1d79 3px solid;
 }
 
 header h1 {
@@ -34,7 +34,7 @@ section {
 }
 
 .section-title {
-    background-color: #0779e4;
+    background-color: #0c1e77;
     color: white;
     padding: 10px 0;
     text-align: center;
@@ -62,7 +62,7 @@ section {
 
 /* Button Styles */
 button {
-    background-color: #4CAF50; /* Green */
+    background-color: #81e2db; /* Green */
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -77,7 +77,7 @@ button:hover {
 
 /* Nutrition Button */
 .check-nutrition-btn {
-    background-color: #2196F3; /* Blue */
+    background-color: #dd9ff6; /* Blue */
     font-size: 16px;
 }
 
