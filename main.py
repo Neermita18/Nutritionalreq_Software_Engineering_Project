@@ -7,46 +7,17 @@ from forms import RegistrationForm, LoginForm  # Assuming you've created these f
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app= Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nutrition.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
 app.secret_key='heudbw2735snd0182bdh376ch3865271'
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(60), nullable=False)
+
     
 @app.route('/')
 @app.route('/index')
 def index():
     session.clear()
     return render_template('index.html')
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        hashed_password = generate_password_hash(form.password.data, method='sha256')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and check_password_hash(user.password, form.password.data):
-            session['logged_in'] = True
-            session['user_id'] = user.id
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('index'))
-        else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+
 @app.route('/process_meal', methods=['GET', 'POST'])
 def process_meal():
    
