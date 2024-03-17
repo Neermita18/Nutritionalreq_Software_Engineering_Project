@@ -8,10 +8,16 @@ body {
 }
 
 .container {
-    width: 80%;
+   
+    width: 60%;
     margin: auto;
     overflow: hidden;
 }
+.c {
+    background-color: rgba(0,0,0,.5);
+    color: #fff;
+
+  }
 
 /* Header Styles */
 header {

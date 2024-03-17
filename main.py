@@ -4,6 +4,9 @@ from meal import get_req
 from flask_sqlalchemy import SQLAlchemy
 from waitress import serve
 import requests
+
+from werkzeug.security import generate_password_hash, check_password_hash
+
 app= Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
@@ -68,6 +71,8 @@ def login():
 def index():
     session.clear()
     return render_template('index.html')
+
+
 @app.route('/process_meal', methods=['GET', 'POST'])
 def process_meal():
    
