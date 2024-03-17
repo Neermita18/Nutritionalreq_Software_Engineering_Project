@@ -3,7 +3,7 @@ from meal import get_req
 from flask_sqlalchemy import SQLAlchemy
 from waitress import serve
 import requests
-from forms import RegistrationForm, LoginForm  # Assuming you've created these forms
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app= Flask(__name__)
