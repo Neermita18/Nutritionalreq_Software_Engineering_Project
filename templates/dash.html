@@ -3,6 +3,7 @@
 <head>
   <title>Auth system</title>
   <meta charset="utf-8">
+  <meta name="viewport" content="width= device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
@@ -11,19 +12,24 @@
   <style>
     /* Custom CSS styles */
     body {
-      background-image: url('/static/styles/background.jpg'); /* Replace 'background.jpg' with your image file */
+      background-image: url('/static/styles/mw2.png'); /* Replace 'background.jpg' with your image file */
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
     }
     .container {
-      background-color: rgba(255, 255, 255, 0.9); /* Adjust the transparency here */
+      background-color: rgba(255, 255, 255, 0.6); /* Adjust the transparency here */
       border-radius: 10px;
       padding: 50px;
       margin-top: 250px;/* Adjust as needed */
       width: 80%; /* Adjust the width of the container */
       max-width: 400px; 
     }
+    @media screen and (max-width: 768px) {
+      .container {
+          width: 95%;
+      }
+  }
   </style>
 </head>
 <body>

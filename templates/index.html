@@ -1,48 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset ="UTF-8">
-    <meta name="viewport" content="width= device-width, initial-scale=1.0">
-    <title>Get Nutrition!</title>
-    <link href= "{{ url_for('static', filename='styles/style.css')}}" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CalTrack</title>
+    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/styles/home.png'); /* Replace 'background.jpg' with your image file */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+          }
+    </style>
 </head>
 <body>
-    <h1 class="container c"><center>Get your nutritional requirements now!</center></h1>
-    <h2><center> Enter today's food data :DDDD</center></h2>
+    <h1 class= "header">Meals constitute a huge part of our daily life. Taking care of what goes inside our bodies should be a must. Let's find out how nutritious your meal was!</h1>
+    <h1 class ="header">Enter today's food data :DDDD</h1>
     <div class="container">
         <!-- breakfast -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
-                <div class="section-title">Breakfast</div>
+                <div class="section-title">What did you eat for breakfast?</div>
                 <div class="input-group">
                     <label for="breakfast-input">Enter your breakfast items:</label>
                     <input type="text" id="breakfast-input" name="breakfast" placeholder="2 eggs, toast with butter">
                 </div>
-                <button type="submit">Enter</button>
+                <div class="button-container"> <!-- Button container added -->
+                    <button type="submit">Let's go</button>
+                </div>
             </section>
         </form>
 
         <!-- lunch -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
-                <div class="section-title">Lunch</div>
+                <div class="section-title">What did you eat for lunch?</div>
                 <div class="input-group">
                     <label for="lunch-input">Enter your lunch items:</label>
                     <input type="text" id="lunch-input" name="lunch" placeholder="Chicken salad">
                 </div>
-                <button type="submit">Enter</button>
+                <div class="button-container"> <!-- Button container added -->
+                    <button type="submit">Let's go</button>
+                </div>
             </section>
         </form>
 
         <!-- dinner -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
-                <div class="section-title">Dinner</div>
+                <div class="section-title">What did you eat for dinner?</div>
                 <div class="input-group">
                     <label for="dinner-input">Enter your dinner items:</label>
                     <input type="text" id="dinner-input" name="dinner" placeholder="Grilled salmon, quinoa">
                 </div>
-                <button type="submit">Enter</button>
+                <div class="button-container"> <!-- Button container added -->
+                    <button type="submit">Let's go</button>
+                </div>
             </section>
         </form>
 
@@ -52,7 +66,4 @@
         </div>
     </div>
 </body>
-</html>
-</body>
-
 </html>

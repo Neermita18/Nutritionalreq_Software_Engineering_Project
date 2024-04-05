@@ -1,102 +1,139 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #a7a7eb;
+    /* background-color: #a7a7eb;
     color: #333;
-    line-height: 1.6;
+    line-height: 1.6; */
     margin: 0;
     padding: 0;
+    background-image: url('/static/styles/mw2.png'); /* Replace 'background.jpg' with your image file */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+      
 }
 
 .container {
    
-    width: 60%;
-    margin: auto;
+    width: 35%;
+    padding-left: 300px;
+    margin: 10;
     overflow: hidden;
 }
-.c {
-    background-color: rgba(0,0,0,.5);
-    color: #fff;
 
-  }
 
 /* Header Styles */
-header {
-    background: #333;
+h3{
+    background: rgba(249, 244, 244, 0.619);
     color: #fff;
-    padding-top: 30px;
-    min-height: 70px;
-    border-bottom: #1d1d79 3px solid;
-}
-
-header h1 {
+    padding-top: 5px;
+    min-height: 0px;
+    margin: 0px;
+    width: 100px;
+    border-radius: 15px; 
     text-align: center;
-    margin: 0;
-    font-size: 24px;
+    padding-bottom: 5px;
+   
+}
+h2{
+    text-align:left;
+    margin:100;
+    color: white;
+    
+
+}
+h1 {
+    text-align: left;
+    margin: 100;
+    font-size: 20px;
+    color:  rgb(255, 255, 255);
+    text-emphasis-color: white;
+    padding: 10px;
+    font-family: serif;
+
 }
 
 /* Section Styles */
 section {
-    margin: 20px 0;
+    margin: 20px 0; 
+    background-color: rgba(152, 152, 152, 0.5);
+    color: #fff;
+    padding: 5px; 
+    border-radius: 15px; /* Rounded corners */
+    width: 300px
 }
-
+/*'Lucida Sans Unicode'*/
 .section-title {
-    background-color: #0c1e77;
-    color: white;
-    padding: 10px 0;
+    background-color: #ffe6e6;
+    color: black;
+    padding: 5px 0;
     text-align: center;
-    margin: 20px 0;
-    font-size: 20px;
+    font-family: 'Lucida Sans Unicode';
+    margin: 10px 0;
+    font-size: 18px; /* Adjusted font size */
+    border-radius: 10px; /* Rounded corners */
+    opacity: 0.85;
 }
 
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 5px; /* Adjusted margin */
 }
 
 .input-group label {
     display: block;
     text-align: left;
     margin: 5px;
+    font-family: serif;
+    color: #fff;
 }
 
 .input-group input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 22px 0;
+    width: calc(100% - 10px);
+    padding: 5px; /* Adjusted padding */
+    margin: auto; /* Adjusted margin */
     border: none;
-    background: #f1f1f1;
+    background: rgba(255, 255, 255, 0.7);
+    color: #333;
 }
+
 
 /* Button Styles */
 button {
-    background-color: #81e2db; /* Green */
+    display: inline-block;
+    background-color: rgba(32, 15, 15, 0.823);
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
+    font-weight: 600;
+    opacity: 1;
+    padding: 10px 15px; /* Adjusted padding */
+    margin: 0 auto; /* Adjusted margin */
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 80%;
+    border-radius: 10px; /* Rounded corners */
 }
-
+.button-container {
+    text-align: center; /* Center the button horizontally */
+}
 button:hover {
     opacity: 0.8;
 }
+.food-item{
+    display: block;
+    text-align: left;
+    margin: 5px;
+    font-family: serif;
+    color: #fff;
 
+}
 /* Nutrition Button */
 .check-nutrition-btn {
-    background-color: #dd9ff6; /* Blue */
+    background-color: rgba(192, 187, 237, 0.7);
     font-size: 16px;
-}
-
-/* Layout for sections */
-.breakfast, .lunch, .dinner {
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
+    width: 310px
 }
 
 /* Adjustments for smaller screens */
 @media screen and (max-width: 768px) {
     .container {
-        width: 95%;
+        width: 80%;
     }
 }

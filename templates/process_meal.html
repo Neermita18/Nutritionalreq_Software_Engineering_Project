@@ -5,6 +5,14 @@
     <meta name="viewport" content="width= device-width, initial-scale=1.0">
     <title>Get Nutrition!</title>
     <link href= "{{ url_for('static', filename='styles/style.css')}}" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('/static/styles/home.png'); /* Replace 'background.jpg' with your image file */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+          }
+    </style>
 </head>
 <body>
     <h1><center>Get your nutritional requirements now!</center></h1>
@@ -18,7 +26,9 @@
                     <label for="breakfast-input">Enter your breakfast items:</label>
                     <input type="text" id="breakfast-input" name="breakfast" placeholder="2 eggs, toast with butter">
                 </div>
-                <button type="submit">Enter</button>
+                <div class="button-container"> <!-- Button container added -->
+                    <button type="submit">Enter</button>
+                </div>
             </section>
         </form>
         {% if bitems %}
@@ -26,11 +36,11 @@
         {% for food in bitems %}
             <div class="food-item">
                 <h3>{{ food[0] | capitalize }}</h3>
-                <p>Calories: {{ food[1] }}</p>
-                <p>Fat: {{ food[2] }}g</p>
-                <p>Protein: {{ food[3] }}g</p>
-                <p>Carbs: {{ food[4] }}g</p>
-                <p>Cholesterol: {{ food[5] }}mg</p>
+                <p >Calories: {{ food[1] }}</p>
+                <p >Fat: {{ food[2] }}g</p>
+                <p >Protein: {{ food[3] }}g</p>
+                <p > Carbs: {{ food[4] }}g</p>
+                <p >Cholesterol: {{ food[5] }}mg</p>
             </div>
         {% endfor %}
         {% endif %}
@@ -42,7 +52,9 @@
                     <label for="lunch-input">Enter your lunch items:</label>
                     <input type="text" id="lunch-input" name="lunch" placeholder="Chicken salad">
                 </div>
-                <button type="submit">Enter</button>
+                <div class="button-container"> <!-- Button container added -->
+                    <button type="submit">Enter</button>
+                </div>
             </section>
         </form>
         {% if litems %}
@@ -67,7 +79,9 @@
                     <label for="dinner-input">Enter your dinner items:</label>
                     <input type="text" id="dinner-input" name="dinner" placeholder="Grilled salmon, quinoa">
                 </div>
-                <button type="submit">Enter</button>
+                <div class="button-container"> <!-- Button container added -->
+                    <button type="submit">Enter</button>
+                </div>
             </section>
         </form>
         {% if ditems %}
