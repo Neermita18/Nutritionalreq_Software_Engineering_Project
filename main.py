@@ -7,40 +7,27 @@ from waitress import serve
 import requests
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from models import db,User, Meals
 app= Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-db = SQLAlchemy(app)
+db.init_app(app)
 app.secret_key='heudbw2735snd0182bdh376ch3865271'
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
 
-    def __init__(self,email,password,name):
-        self.name = name
-        self.email = email
-        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    
-    def check_password(self,password):
-        return bcrypt.checkpw(password.encode('utf-8'),self.password.encode('utf-8'))
-class Meals(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
-    breakfast = db.Column(db.String(200))
-    lunch = db.Column(db.String(200))
-    dinner = db.Column(db.String(200))
-    
-    def __init__(self, date, breakfast, lunch, dinner):
-        self.date = date
-        self.breakfast = breakfast
-        self.lunch = lunch
-        self.dinner = dinner
         	
 with app.app_context():
     db.create_all()
+with app.app_context():
+    metadata = db.metadata
+    
+    # Get the specific table you want to drop from the metadata
+    table_name = 'usersdb'
+    table_to_drop = metadata.tables.get(table_name)
+    
+    # Drop the table if it exists
+    if table_to_drop is not None:
+        table_to_drop.drop(db.engine)
+  
 
 @app.route('/')
 def dash():
@@ -53,7 +40,7 @@ def register():
         name = request.form['name']
         email = request.form['email']
         password = request.form['password']
-
+        session['name'] = name 
         new_user = User(name=name,email=email,password=password)
         db.session.add(new_user)
         db.session.commit()
@@ -73,6 +60,8 @@ def login():
         
         if user and user.check_password(password):
             session['email'] = user.email
+            session['name']=user.name
+            
             return redirect('/index')
         else:
             return render_template('login.html',error='Invalid user')
@@ -82,13 +71,13 @@ def login():
 
 @app.route('/index')
 def index():
-    session.clear()
+    session.pop('meals', None)
     return render_template('index.html')
 
 
 @app.route('/process_meal', methods=['GET', 'POST'])
 def process_meal():
-   
+    
     if request.method == 'POST':
         meals = session.get('meals', {'breakfast': None, 'lunch': None, 'dinner': None})
         if 'breakfast' in request.form:
@@ -104,8 +93,13 @@ def process_meal():
             meals['dinner']=get_req(dinner)
          
         if all(meals.values()):
+            
             # Store all meals in the database
-            store_meal_in_database(meals)   
+            
+           
+            store_meal_in_database(meals)
+            # flash('Meals information stored successfully!')
+            # return redirect('/process_meal')  # Redirect to another page
         session['meals']=meals    
         session.modified= True
         
@@ -135,6 +129,11 @@ def process_meal():
 def store_meal_in_database(meals):
     # Get the current date
     date = datetime.now().date()
+    email = session.get('email')
+    name = session.get('name')
+    
+    
+    user_name = name
     # Get user_id from session, assuming it's stored there
     breakfast_json = json.dumps(meals['breakfast'])
     
@@ -142,9 +141,56 @@ def store_meal_in_database(meals):
     dinner_json = json.dumps(meals['dinner'])
     
     # Store the meal in the database
-    new_meal =Meals(date=date, breakfast=breakfast_json, lunch=lunch_json, dinner=dinner_json)
+    new_meal =Meals(date=date,user_name=user_name, breakfast=breakfast_json, lunch=lunch_json, dinner=dinner_json)
     db.session.add(new_meal)
     db.session.commit()
+    session.pop('meals', None)
     flash('Meals information stored successfully!')   
+    
+# @app.route('/dashboard')
+
+# def dashboard():
+#     # Retrieve the current date
+#     current_date = datetime.now().date().isoformat()
+
+#     # Retrieve meal items for the current date
+#     meals = Meals.query.filter_by(date=current_date).all()
+
+#     # Initialize variables to store totals
+#     total_calories = 0
+#     total_proteins = 0
+#     total_fats = 0
+#     total_carbs = 0
+#     total_cholesterol = 0
+
+#     # Iterate through meal items and calculate totals
+#     for meal in meals:
+#         # Parse JSON data for each meal item
+#         breakfast_items = json.loads(meal.breakfast)
+#         lunch_items = json.loads(meal.lunch)
+#         dinner_items = json.loads(meal.dinner)
+
+#         # Calculate totals for each meal
+#         total_calories += sum(item['calories'] for item in breakfast_items['items'])
+#         total_proteins += sum(item['protein_g'] for item in breakfast_items['items'])
+#         total_fats += sum(item['fat_total_g'] for item in breakfast_items['items'])
+#         total_carbs += sum(item['carbohydrates_total_g'] for item in breakfast_items['items'])
+#         total_cholesterol += sum(item['cholesterol_mg'] for item in breakfast_items['items'])
+
+#         total_calories += sum(item['calories'] for item in lunch_items['items'])
+#         total_proteins += sum(item['protein_g'] for item in lunch_items['items'])
+#         total_fats += sum(item['fat_total_g'] for item in lunch_items['items'])
+#         total_carbs += sum(item['carbohydrates_total_g'] for item in lunch_items['items'])
+#         total_cholesterol += sum(item['cholesterol_mg'] for item in lunch_items['items'])
+
+#         total_calories += sum(item['calories'] for item in dinner_items['items'])
+#         total_proteins += sum(item['protein_g'] for item in dinner_items['items'])
+#         total_fats += sum(item['fat_total_g'] for item in dinner_items['items'])
+#         total_carbs += sum(item['carbohydrates_total_g'] for item in dinner_items['items'])
+#         total_cholesterol += sum(item['cholesterol_mg'] for item in dinner_items['items'])
+
+#     # Pass calculated totals to the template for rendering
+#     return render_template('dashboard.html', total_calories=total_calories, total_proteins=total_proteins,
+#                            total_fats=total_fats, total_carbs=total_carbs, total_cholesterol=total_cholesterol)
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug= True)
