@@ -31,8 +31,11 @@ def get_req(food):
             protein= item["protein_g"]
             carbs_total = item["carbohydrates_total_g"]
             cholesterol= item["cholesterol_mg"]
+            sodium= item["sodium_mg"]
+            potassium= item["potassium_mg"]
+            sugar= item["sugar_g"]
             # return name,calories,
-            foodlist.append([name, calories, fat_total,protein,carbs_total,cholesterol])
+            foodlist.append([name, calories, fat_total,protein,carbs_total,cholesterol, sodium, potassium, sugar])
         return foodlist
     else:
         print("Error:", response.status_code, response.text)

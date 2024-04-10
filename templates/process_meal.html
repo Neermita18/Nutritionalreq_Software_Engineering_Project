@@ -7,7 +7,7 @@
     <link href= "{{ url_for('static', filename='styles/style.css')}}" rel="stylesheet" />
     <style>
         body {
-            background-image: url('/static/styles/home.png'); /* Replace 'background.jpg' with your image file */
+            background-image: url('/static/styles/home2.png'); /* Replace 'background.jpg' with your image file */
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -31,19 +31,32 @@
                 </div>
             </section>
         </form>
-        {% if bitems %}
-        <h2>Breakfast Nutritional Information</h2>
-        {% for food in bitems %}
-            <div class="food-item">
-                <h3>{{ food[0] | capitalize }}</h3>
-                <p >Calories: {{ food[1] }}</p>
-                <p >Fat: {{ food[2] }}g</p>
-                <p >Protein: {{ food[3] }}g</p>
-                <p > Carbs: {{ food[4] }}g</p>
-                <p >Cholesterol: {{ food[5] }}mg</p>
+        
+
+
+    {% if bitems %}
+    <h2>Breakfast Nutritional Information</h2>
+    {% for food in bitems %}
+        <div class="food-item">
+            <h3>{{ food[0] | capitalize }}</h3>
+            <div class="nutrition-info">
+                <div class="nutrition-column">
+                    <p>Calories: {{ food[1] }}</p>
+                    <p>Fat: {{ food[2] }}g</p>
+                    <p>Protein: {{ food[3] }}g</p>
+                    <p>Carbs: {{ food[4] }}g</p>
+                    
+                </div>
+                <div class="nutrition-column">
+                    <p>Cholesterol: {{ food[5] }}mg</p>
+                    <p>Sodium: {{ food[6] }}mg</p>
+                    <p>Potassium: {{ food[7] }}mg</p>
+                    <p>Sugar: {{ food[8] }}g</p>
+                </div>
             </div>
-        {% endfor %}
-        {% endif %}
+        </div>
+    {% endfor %}
+{% endif %}
         <!-- lunch -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
@@ -60,15 +73,25 @@
         {% if litems %}
         <h2>Lunch Nutritional Information</h2>
         {% for food in litems %}
-            <div class="food-item">
-                <h3>{{ food[0] | capitalize }}</h3>
-                <p>Calories: {{ food[1] }}</p>
-                <p>Fat: {{ food[2] }}g</p>
-                <p>Protein: {{ food[3] }}g</p>
-                <p>Carbs: {{ food[4] }}g</p>
-                <p>Cholesterol: {{ food[5] }}mg</p>
+        <div class="food-item">
+            <h3>{{ food[0] | capitalize }}</h3>
+            <div class="nutrition-info">
+                <div class="nutrition-column">
+                    <p>Calories: {{ food[1] }}</p>
+                    <p>Fat: {{ food[2] }}g</p>
+                    <p>Protein: {{ food[3] }}g</p>
+                    <p>Carbs: {{ food[4] }}g</p>
+                    
+                </div>
+                <div class="nutrition-column">
+                    <p>Cholesterol: {{ food[5] }}mg</p>
+                    <p>Sodium: {{ food[6] }}mg</p>
+                    <p>Potassium: {{ food[7] }}mg</p>
+                    <p>Sugar: {{ food[8] }}g</p>
+                </div>
             </div>
-        {% endfor %}
+        </div>
+    {% endfor %}
         {% endif %}
 
         <!-- dinner -->
@@ -87,15 +110,25 @@
         {% if ditems %}
         <h2>Dinner Nutritional Information</h2>
         {% for food in ditems %}
-            <div class="food-item">
-                <h3>{{ food[0] | capitalize }}</h3>
-                <p>Calories: {{ food[1] }}</p>
-                <p>Fat: {{ food[2] }}g</p>
-                <p>Protein: {{ food[3] }}g</p>
-                <p>Carbs: {{ food[4] }}g</p>
-                <p>Cholesterol: {{ food[5] }}mg</p>
+        <div class="food-item">
+            <h3>{{ food[0] | capitalize }}</h3>
+            <div class="nutrition-info">
+                <div class="nutrition-column">
+                    <p>Calories: {{ food[1] }}</p>
+                    <p>Fat: {{ food[2] }}g</p>
+                    <p>Protein: {{ food[3] }}g</p>
+                    <p>Carbs: {{ food[4] }}g</p>
+                    
+                </div>
+                <div class="nutrition-column">
+                    <p>Cholesterol: {{ food[5] }}mg</p>
+                    <p>Sodium: {{ food[6] }}mg</p>
+                    <p>Potassium: {{ food[7] }}mg</p>
+                    <p>Sugar: {{ food[8] }}g</p>
+                </div>
             </div>
-        {% endfor %}
+        </div>
+    {% endfor %}
         {% endif %}
 
         <!-- Button to Check Nutrition Levels -->

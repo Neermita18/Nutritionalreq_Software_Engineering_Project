@@ -122,6 +122,8 @@ button:hover {
     margin: 5px;
     font-family: serif;
     color: #fff;
+    width: 500px;
+    margin-bottom: 10px;
 
 }
 /* Nutrition Button */
@@ -137,3 +139,19 @@ button:hover {
         width: 80%;
     }
 }
+
+  
+  .nutrition-info {
+    display: flex;
+    gap: -10px;
+  }
+  
+  .nutrition-column {
+    flex: 0.5;
+  }
+  
+  /* Adjust as needed */
+  .nutrition-column p {
+    margin-bottom: 5px;
+  }
+  

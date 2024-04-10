@@ -1,24 +1,29 @@
 import numpy as np
 import pandas as pd
-import requests
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn import svm
+from  sklearn.model_selection import train_test_split
+data= pd.read_csv('bmi.csv')
+print(data)
+df= pd.DataFrame(data)
+print(df)
+plt.figure(figsize=(10, 6))
+from sklearn.metrics import accuracy_score
+sns.scatterplot(df, x='Weight', y='Bmi', hue='BmiClass')
+plt.show()
+plt.figure(figsize=(10, 6))
+sns.scatterplot(df, x='Height', y='Bmi', hue='BmiClass')
+plt.show()
 
-# URL of the DRI Calculator page
-url = 'https://www.nal.usda.gov/human-nutrition-and-food-safety/dri-calculator'
+X = df.drop('BmiClass', axis=1)
+y = df['BmiClass']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-# User information (replace with actual user data)
-user_info = {
-    'Weight': '70',    # in kg
-    'Height': '170',   # in cm
-    'Age': '30',       # in years
-    'Sex': 'male'
-}
+clf = svm.SVC(kernel='linear')
+clf.fit(X_train, y_train)
 
-# Send a POST request with user information
-response = requests.post(url, data=user_info)
+y_pred = clf.predict(X_test)
 
-# Check if the request was successful
-if response.status_code == 200:
-    # Process and display the response
-    print(response.text)
-else:
-    print("Failed to retrieve DRI values.")
+a= accuracy_score(y_test, y_pred)
+print(a)
