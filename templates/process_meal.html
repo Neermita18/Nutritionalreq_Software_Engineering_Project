@@ -17,11 +17,19 @@
 <body>
     <h1><center>Get your nutritional requirements now!</center></h1>
     <h2> <center>Enter today's food data :D</center></h2>
+    <div class="sidenav">
+        <div class="dash"><img src="\static\styles\dashimg.png" alt="Dashboard Image" class="dashboard-image">DASHBOARD</div>
+        <a href="register">Register</a>
+        <a href="login">Login</a>
+    </div>
     <div class="container">
         <!-- breakfast -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
-                <div class="section-title">Breakfast</div>
+                <div class ="imageandtitle">
+                    <img src="\static\styles\breakfast.png" alt="Breakfast Image" class="breakfast-image">
+                    <div class="section-title">Breakfast</div>
+                </div>
                 <div class="input-group">
                     <label for="breakfast-input">Enter your breakfast items:</label>
                     <input type="text" id="breakfast-input" name="breakfast" placeholder="2 eggs, toast with butter">
@@ -34,11 +42,11 @@
         
 
 
-    {% if bitems %}
-    <h2>Breakfast Nutritional Information</h2>
-    {% for food in bitems %}
-        <div class="food-item">
-            <h3>{{ food[0] | capitalize }}</h3>
+        {% if bitems %}
+        <h2>Breakfast Nutritional Information</h2>
+        {% for food in bitems %}
+            <div class="food-item">
+                <h3>{{ food[0] | capitalize }}</h3>
             <div class="nutrition-info">
                 <div class="nutrition-column">
                     <p>Calories: {{ food[1] }}</p>
@@ -54,13 +62,16 @@
                     <p>Sugar: {{ food[8] }}g</p>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-{% endif %}
+            </div>
+        {% endfor %}
+        {% endif %}
         <!-- lunch -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
-                <div class="section-title">Lunch</div>
+                <div class ="imageandtitle">
+                    <img src="\static\styles\lunch.png" alt="lunch Image" class="lunch-image">
+                    <div class="section-title">Lunch</div>
+                </div>
                 <div class="input-group">
                     <label for="lunch-input">Enter your lunch items:</label>
                     <input type="text" id="lunch-input" name="lunch" placeholder="Chicken salad">
@@ -73,31 +84,34 @@
         {% if litems %}
         <h2>Lunch Nutritional Information</h2>
         {% for food in litems %}
-        <div class="food-item">
-            <h3>{{ food[0] | capitalize }}</h3>
+            <div class="food-item">
+                <h3>{{ food[0] | capitalize }}</h3>
             <div class="nutrition-info">
                 <div class="nutrition-column">
-                    <p>Calories: {{ food[1] }}</p>
-                    <p>Fat: {{ food[2] }}g</p>
-                    <p>Protein: {{ food[3] }}g</p>
-                    <p>Carbs: {{ food[4] }}g</p>
+                <p>Calories: {{ food[1] }}</p>
+                <p>Fat: {{ food[2] }}g</p>
+                <p>Protein: {{ food[3] }}g</p>
+                <p>Carbs: {{ food[4] }}g</p>
                     
                 </div>
                 <div class="nutrition-column">
-                    <p>Cholesterol: {{ food[5] }}mg</p>
+                <p>Cholesterol: {{ food[5] }}mg</p>
                     <p>Sodium: {{ food[6] }}mg</p>
                     <p>Potassium: {{ food[7] }}mg</p>
                     <p>Sugar: {{ food[8] }}g</p>
                 </div>
             </div>
-        </div>
-    {% endfor %}
+            </div>
+        {% endfor %}
         {% endif %}
 
         <!-- dinner -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
-                <div class="section-title">Dinner</div>
+                <div class ="imageandtitle">
+                    <img src="\static\styles\dinner.png" alt="Dinner Image" class="dinner-image">
+                    <div class="section-title">Dinner</div>
+                </div>
                 <div class="input-group">
                     <label for="dinner-input">Enter your dinner items:</label>
                     <input type="text" id="dinner-input" name="dinner" placeholder="Grilled salmon, quinoa">
@@ -110,25 +124,25 @@
         {% if ditems %}
         <h2>Dinner Nutritional Information</h2>
         {% for food in ditems %}
-        <div class="food-item">
-            <h3>{{ food[0] | capitalize }}</h3>
+            <div class="food-item">
+                <h3>{{ food[0] | capitalize }}</h3>
             <div class="nutrition-info">
                 <div class="nutrition-column">
-                    <p>Calories: {{ food[1] }}</p>
-                    <p>Fat: {{ food[2] }}g</p>
-                    <p>Protein: {{ food[3] }}g</p>
-                    <p>Carbs: {{ food[4] }}g</p>
+                <p>Calories: {{ food[1] }}</p>
+                <p>Fat: {{ food[2] }}g</p>
+                <p>Protein: {{ food[3] }}g</p>
+                <p>Carbs: {{ food[4] }}g</p>
                     
                 </div>
                 <div class="nutrition-column">
-                    <p>Cholesterol: {{ food[5] }}mg</p>
+                <p>Cholesterol: {{ food[5] }}mg</p>
                     <p>Sodium: {{ food[6] }}mg</p>
                     <p>Potassium: {{ food[7] }}mg</p>
                     <p>Sugar: {{ food[8] }}g</p>
                 </div>
             </div>
-        </div>
-    {% endfor %}
+            </div>
+        {% endfor %}
         {% endif %}
 
         <!-- Button to Check Nutrition Levels -->

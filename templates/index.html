@@ -17,11 +17,19 @@
 <body>
     <h1 class= "header">Meals constitute a huge part of our daily life. Taking care of what goes inside our bodies should be a must. Let's find out how nutritious your meal was!</h1>
     <h1 class ="header">Enter today's food data :DDDD</h1>
+    <div class="sidenav">
+        <div class="dash"><img src="\static\styles\dashimg.png" alt="Dashboard Image" class="dashboard-image">DASHBOARD</div>
+        <a href="register">Register</a>
+        <a href="login">Login</a>
+    </div>
     <div class="container">
         <!-- breakfast -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
+                <div class ="imageandtitle">
+                    <img src="\static\styles\breakfast.png" alt="Breakfast Image" class="breakfast-image">
                 <div class="section-title">What did you eat for breakfast?</div>
+                </div>
                 <div class="input-group">
                     <label for="breakfast-input">Enter your breakfast items:</label>
                     <input type="text" id="breakfast-input" name="breakfast" placeholder="2 eggs, toast with butter">
@@ -35,7 +43,10 @@
         <!-- lunch -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
+                <div class ="imageandtitle">
+                    <img src="\static\styles\lunch.png" alt="lunch Image" class="lunch-image">
                 <div class="section-title">What did you eat for lunch?</div>
+                </div>
                 <div class="input-group">
                     <label for="lunch-input">Enter your lunch items:</label>
                     <input type="text" id="lunch-input" name="lunch" placeholder="Chicken salad">
@@ -49,7 +60,10 @@
         <!-- dinner -->
         <form action="/process_meal" method="POST">
             <section class="meal-input">
+                <div class ="imageandtitle">
+                    <img src="\static\styles\dinner.png" alt="Dinner Image" class="dinner-image">
                 <div class="section-title">What did you eat for dinner?</div>
+                </div>
                 <div class="input-group">
                     <label for="dinner-input">Enter your dinner items:</label>
                     <input type="text" id="dinner-input" name="dinner" placeholder="Grilled salmon, quinoa">

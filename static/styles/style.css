@@ -20,7 +20,68 @@ body {
     overflow: hidden;
 }
 
+.sidenav {
+    height: 40%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 200px;
+    left: 0;
+    /* background-color: #111; */
+    overflow-x: hidden;
+    padding-top: 10px;
+}
+.dashboard-image {
+    width: 20px; /* Adjust the width as per your requirement */
+    height: auto; /* To maintain the aspect ratio */
+    margin-right: 10px; /* Optional: add some space between the image and text */
+}
 
+.dash {
+    padding: 6px 8px 6px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+    display: block;
+}
+
+.sidenav a {
+    padding: 10px 8px 6px 40px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.breakfast-image{
+    width: 30px; /* Adjust the width as per your requirement */
+    height: auto; /* To maintain the aspect ratio */
+    margin-right: 5px;
+    margin-left: 10px;;
+}
+
+.lunch-image{
+    width: 30px; /* Adjust the width as per your requirement */
+    height: auto; /* To maintain the aspect ratio */
+    margin-right: 5px;
+    margin-left: 10px;;
+}
+
+.dinner-image{
+    width: 30px; /* Adjust the width as per your requirement */
+    height: auto; /* To maintain the aspect ratio */
+    margin-right: 5px;
+    margin-left: 10px;;
+}
+
+.imageandtitle {
+    display: flex;
+    align-items: center;
+}
 /* Header Styles */
 h3{
     background: rgba(249, 244, 244, 0.619);
@@ -54,28 +115,32 @@ h1 {
 
 /* Section Styles */
 section {
-    margin: 20px 0; 
-    background-color: rgba(152, 152, 152, 0.5);
+    margin: 30px 0; 
+    /* background-color: rgba(152, 152, 152, 0.5); */
+    background-color: rgba(170, 192, 226, 0.5);
     color: #fff;
     padding: 5px; 
-    border-radius: 15px; /* Rounded corners */
-    width: 300px
+    border-radius: 10px; /* Rounded corners */
+    width: 400px
 }
 /*'Lucida Sans Unicode'*/
 .section-title {
     background-color: #ffe6e6;
     color: black;
+    width: 400px;
     padding: 5px 0;
     text-align: center;
     font-family: 'Lucida Sans Unicode';
-    margin: 10px 0;
+    margin: 10px 10px;
     font-size: 18px; /* Adjusted font size */
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 20px; /* Rounded corners */
     opacity: 0.85;
 }
 
 .input-group {
     margin-bottom: 5px; /* Adjusted margin */
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .input-group label {
@@ -87,7 +152,7 @@ section {
 }
 
 .input-group input {
-    width: calc(100% - 10px);
+    width: calc(100% - 20px);
     padding: 5px; /* Adjusted padding */
     margin: auto; /* Adjusted margin */
     border: none;
@@ -112,6 +177,8 @@ button {
 }
 .button-container {
     text-align: center; /* Center the button horizontally */
+    width: 150px;
+    padding-left: 120px;
 }
 button:hover {
     opacity: 0.8;
