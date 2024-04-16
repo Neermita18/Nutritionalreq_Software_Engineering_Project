@@ -8,8 +8,10 @@ import requests
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db,User, Meals
+import ast
+from sqlalchemy import desc
 app= Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/91982/Desktop/SEPROJECT/instance/database.db'
 db.init_app(app)
 app.secret_key='heudbw2735snd0182bdh376ch3865271'
 
@@ -147,21 +149,57 @@ def store_meal_in_database(meals):
     session.pop('meals', None)
     flash('Meals information stored successfully!')   
     
-# @app.route('/dashboard')
+@app.route('/dashboard', methods=['GET','POST'])
 
-# def dashboard():
-#     # Retrieve the current date
-#     current_date = datetime.now().date().isoformat()
+def dashboard():
+    current_date = datetime.now().date().isoformat()
+    meals= Meals.query.filter_by(date=current_date).order_by(desc(Meals.id)).first()
 
-#     # Retrieve meal items for the current date
-#     meals = Meals.query.filter_by(date=current_date).all()
+    bi= ast.literal_eval(meals.breakfast)
+    li=ast.literal_eval(meals.lunch)
+    di=ast.literal_eval(meals.dinner)
+    #     # Initialize variables to store totals
+    total_calories = 0
+    total_calories += sum(item[1] for item in bi)
+    total_calories += sum(item[1] for item in li)
+    total_calories += sum(item[1] for item in di)
 
-#     # Initialize variables to store totals
-#     total_calories = 0
-#     total_proteins = 0
-#     total_fats = 0
-#     total_carbs = 0
-#     total_cholesterol = 0
+    
+    total_fats = 0
+    total_fats += sum(item[2] for item in bi)
+    total_fats += sum(item[2] for item in li)
+    total_fats += sum(item[2] for item in di)
+        
+    total_proteins = 0
+    total_proteins += sum(item[3] for item in bi)
+    total_proteins += sum(item[3] for item in li)
+    total_proteins += sum(item[3] for item in di)
+        
+    total_carbs = 0
+    total_carbs += sum(item[4] for item in bi)
+    total_carbs += sum(item[4] for item in li)
+    total_carbs += sum(item[4] for item in di)
+        
+    total_cholesterol = 0
+    total_cholesterol += sum(item[5] for item in bi)
+    total_cholesterol += sum(item[5] for item in li)
+    total_cholesterol += sum(item[5] for item in di)
+        
+    sodium= 0
+    sodium += sum(item[6] for item in bi)
+    sodium += sum(item[6] for item in li)
+    sodium+= sum(item[6] for item in di)
+        
+    potas=0
+    potas += sum(item[7] for item in bi)
+    potas+= sum(item[7] for item in li)
+    potas += sum(item[7] for item in di)
+        
+    sugar = 0
+    sugar += sum(item[8] for item in bi)
+    sugar+= sum(item[8] for item in li)
+    sugar+= sum(item[8] for item in di)
+        
 
 #     # Iterate through meal items and calculate totals
 #     for meal in meals:
@@ -190,7 +228,7 @@ def store_meal_in_database(meals):
 #         total_cholesterol += sum(item['cholesterol_mg'] for item in dinner_items['items'])
 
 #     # Pass calculated totals to the template for rendering
-#     return render_template('dashboard.html', total_calories=total_calories, total_proteins=total_proteins,
-#                            total_fats=total_fats, total_carbs=total_carbs, total_cholesterol=total_cholesterol)
+    return render_template('dashboard.html', total_calories=total_calories, total_fats=total_fats,total_proteins=total_proteins,
+                            total_carbs=total_carbs, total_cholesterol=total_cholesterol, total_sodium=sodium, total_potassium=potas, total_sugar=sugar)
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug= True)

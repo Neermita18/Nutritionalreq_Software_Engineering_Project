@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/styles/home2.png'); /* Replace 'background.jpg' with your image file */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+          }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Today's Nutritional Information -->
+        <section class="today-nutrition">
+            <h2>Today</h2>
+            <h3>{{ current_date }}</h3>
+            <div class="nutrition-info">
+                <div class="nutrition-column">
+                    <p>Total Calories: {{ total_calories }}</p>
+                    <p>Total Fat: {{ total_fats }}g</p>
+                    <p>Total Protein: {{ total_proteins }}g</p>
+                    <p>Total Carbs: {{ total_carbs }}g</p>
+                </div>
+                <div class="nutrition-column">
+                    <p>Total Cholesterol: {{ total_cholesterol }}mg</p>
+                    <p>Total Sodium: {{ total_sodium }}mg</p>
+                    <p>Total Potassium: {{ total_potassium }}mg</p>
+                    <p>Total Sugar: {{ total_sugar }}g</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
+
+
