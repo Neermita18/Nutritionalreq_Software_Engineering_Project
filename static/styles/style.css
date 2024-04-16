@@ -208,7 +208,7 @@ button:hover {
 }
 
   
-  .nutrition-info {
+.nutrition-info {
     display: flex;
     gap: -10px;
   }
