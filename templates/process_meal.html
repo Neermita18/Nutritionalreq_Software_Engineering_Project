@@ -18,7 +18,7 @@
     <h1><center>Get your nutritional requirements now!</center></h1>
     <h2> <center>Enter today's food data :D</center></h2>
     <div class="sidenav">
-        <div class="dash"><img src="\static\styles\dashimg.png" alt="Dashboard Image" class="dashboard-image">DASHBOARD</div>
+        <div class="dash"><a href="{{ url_for('dashboard') }}"><img src="\static\styles\dashimg.png" alt="Dashboard Image" class="dashboard-image">Dashboard</a></div>
         <a href="register">Register</a>
         <a href="login">Login</a>
     </div>
@@ -147,9 +147,7 @@
         {% endif %}
 
         <!-- Button to Check Nutrition Levels -->
-        <div class="check-nutrition">
-            <a href="{{ url_for('dashboard') }}" class="check-nutrition-btn">Check Nutrition Levels</a>
-        </div>
+        
     </div>
 
     

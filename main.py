@@ -10,6 +10,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import db,User, Meals
 import ast
 from sqlalchemy import desc
+from datetime import timedelta
+from sqlalchemy import func
 app= Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/91982/Desktop/SEPROJECT/instance/database.db'
 db.init_app(app)
@@ -152,83 +154,101 @@ def store_meal_in_database(meals):
 @app.route('/dashboard', methods=['GET','POST'])
 
 def dashboard():
-    current_date = datetime.now().date().isoformat()
-    meals= Meals.query.filter_by(date=current_date).order_by(desc(Meals.id)).first()
-
-    bi= ast.literal_eval(meals.breakfast)
-    li=ast.literal_eval(meals.lunch)
-    di=ast.literal_eval(meals.dinner)
-    #     # Initialize variables to store totals
-    total_calories = 0
-    total_calories += sum(item[1] for item in bi)
-    total_calories += sum(item[1] for item in li)
-    total_calories += sum(item[1] for item in di)
-
+    current_date = datetime.now().date()
+    start_date = current_date - timedelta(days=7)
+    user_name = session.get('name')
+    # Query the database to get the last row for each date in the range
+    last_meals = db.session.query(Meals.date, func.max(Meals.id)).\
+                 filter(Meals.date >= start_date, Meals.date <= current_date, Meals.user_name == user_name).\
+                 group_by(Meals.date).all()
+    #print(last_meals)
+    # Initialize a list to store the last meal for each date
+    last_meals_data = []    
+    for date, max_id in last_meals:
+        meal = Meals.query.filter_by(date=date, id=max_id).first()
+        #print(meal)
     
-    total_fats = 0
-    total_fats += sum(item[2] for item in bi)
-    total_fats += sum(item[2] for item in li)
-    total_fats += sum(item[2] for item in di)
-        
-    total_proteins = 0
-    total_proteins += sum(item[3] for item in bi)
-    total_proteins += sum(item[3] for item in li)
-    total_proteins += sum(item[3] for item in di)
-        
-    total_carbs = 0
-    total_carbs += sum(item[4] for item in bi)
-    total_carbs += sum(item[4] for item in li)
-    total_carbs += sum(item[4] for item in di)
-        
-    total_cholesterol = 0
-    total_cholesterol += sum(item[5] for item in bi)
-    total_cholesterol += sum(item[5] for item in li)
-    total_cholesterol += sum(item[5] for item in di)
-        
-    sodium= 0
-    sodium += sum(item[6] for item in bi)
-    sodium += sum(item[6] for item in li)
-    sodium+= sum(item[6] for item in di)
-        
-    potas=0
-    potas += sum(item[7] for item in bi)
-    potas+= sum(item[7] for item in li)
-    potas += sum(item[7] for item in di)
-        
-    sugar = 0
-    sugar += sum(item[8] for item in bi)
-    sugar+= sum(item[8] for item in li)
-    sugar+= sum(item[8] for item in di)
-        
+        bi= ast.literal_eval(meal.breakfast)
+        li=ast.literal_eval(meal.lunch)
+        di=ast.literal_eval(meal.dinner)
+        # Loop through the fetched meals and print their attributes
 
-#     # Iterate through meal items and calculate totals
-#     for meal in meals:
-#         # Parse JSON data for each meal item
-#         breakfast_items = json.loads(meal.breakfast)
-#         lunch_items = json.loads(meal.lunch)
-#         dinner_items = json.loads(meal.dinner)
+        name= session.get('name')
+        cal=0
+        print(type(meal.date))
+        for i in bi:
+                cal+= i[1]
+        for i in li:
+                cal+=i[1]
+        for i in di:
+                cal+=i[1]
+        print("Total Calories today: ",cal)
+                
+        fats=0
 
-#         # Calculate totals for each meal
-#         total_calories += sum(item['calories'] for item in breakfast_items['items'])
-#         total_proteins += sum(item['protein_g'] for item in breakfast_items['items'])
-#         total_fats += sum(item['fat_total_g'] for item in breakfast_items['items'])
-#         total_carbs += sum(item['carbohydrates_total_g'] for item in breakfast_items['items'])
-#         total_cholesterol += sum(item['cholesterol_mg'] for item in breakfast_items['items'])
+        for i in bi:
+                fats+= i[2]
+        for i in li:
+                fats+=i[2]
+        for i in di:
+                fats+=i[2]
+        print("Total Fats consumed today: ",fats, "g")
 
-#         total_calories += sum(item['calories'] for item in lunch_items['items'])
-#         total_proteins += sum(item['protein_g'] for item in lunch_items['items'])
-#         total_fats += sum(item['fat_total_g'] for item in lunch_items['items'])
-#         total_carbs += sum(item['carbohydrates_total_g'] for item in lunch_items['items'])
-#         total_cholesterol += sum(item['cholesterol_mg'] for item in lunch_items['items'])
-
-#         total_calories += sum(item['calories'] for item in dinner_items['items'])
-#         total_proteins += sum(item['protein_g'] for item in dinner_items['items'])
-#         total_fats += sum(item['fat_total_g'] for item in dinner_items['items'])
-#         total_carbs += sum(item['carbohydrates_total_g'] for item in dinner_items['items'])
-#         total_cholesterol += sum(item['cholesterol_mg'] for item in dinner_items['items'])
-
-#     # Pass calculated totals to the template for rendering
-    return render_template('dashboard.html', total_calories=total_calories, total_fats=total_fats,total_proteins=total_proteins,
-                            total_carbs=total_carbs, total_cholesterol=total_cholesterol, total_sodium=sodium, total_potassium=potas, total_sugar=sugar)
+        proteins=0
+        
+        for i in bi:
+                proteins+= i[3]
+        for i in li:
+                proteins+=i[3]
+        for i in di:
+                proteins+=i[3]
+        print("Total Proteins consumed today: ",proteins, "g")
+                
+        total_carbs = 0
+        total_carbs += sum(item[4] for item in bi)
+        total_carbs += sum(item[4] for item in li)
+        total_carbs += sum(item[4] for item in di)
+        print("carbs: ",total_carbs )
+                
+        total_cholesterol = 0
+        total_cholesterol += sum(item[5] for item in bi)
+        total_cholesterol += sum(item[5] for item in li)
+        total_cholesterol += sum(item[5] for item in di)
+        print("cholesterol: ", total_cholesterol)
+                
+        sodium= 0
+        sodium += sum(item[6] for item in bi)
+        sodium += sum(item[6] for item in li)
+        sodium+= sum(item[6] for item in di)
+        print("sodium: ", sodium)
+                
+        potas=0
+        potas += sum(item[7] for item in bi)
+        potas+= sum(item[7] for item in li)
+        potas += sum(item[7] for item in di)
+        print("potassium: ", potas)
+                
+        sugar = 0
+        sugar += sum(item[8] for item in bi)
+        sugar+= sum(item[8] for item in li)
+        sugar+= sum(item[8] for item in di)
+        print("sugar: ", sugar)
+        
+        last_meals_data.append({
+                'name': name,
+                'date': date,
+                'total_calories': cal,
+                'total_proteins': proteins,
+                'total_carbs': total_carbs,
+                'total_fats': fats,
+                'total_cholesterol': total_cholesterol,
+                'total_sodium': sodium,
+                'total_potassium': potas,
+                'total_sugar': sugar
+            })
+        meals=[]
+    for item in last_meals_data[::-1]:
+        meals.append(item)
+    return render_template('dashboard.html', last_meals=meals)
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug= True)

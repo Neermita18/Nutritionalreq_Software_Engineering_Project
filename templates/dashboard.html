@@ -12,29 +12,55 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
           }
+          h4 {
+            background: none
+            size: 200px;
+            color: white;
+          }
+          hello{
+        
+                margin: 30px 0; 
+                /* background-color: rgba(152, 152, 152, 0.5); */
+                background-color: rgba(170, 192, 226, 0.5);
+                color: #fff;
+                padding: 5px; 
+                border-radius: 10px; /* Rounded corners */
+                width: 400px
+            }
+
+          
     </style>
 </head>
 <body>
+    <h2> &ensp;   Here's your complete log of nutritional data over a few days. </h2>
+    <h4>  &ensp;   Good job, you're doing so well! </h4>
+    <div class="sidenav">
+        <a href="dashboard"><img src="\static\styles\dashh.png" alt="Dashboard Image" class="dashboard-image">Dashboard</a>
+        <a href="register">Register</a>
+        <a href="login">Login</a>
+        <a href="index"><img src="\static\styles\progress.png" alt="P Image" class="dashboard-image">Progress</a>
+    </div>
     <div class="container">
-        <!-- Today's Nutritional Information -->
-        <section class="today-nutrition">
-            <h2>Today</h2>
-            <h3>{{ current_date }}</h3>
+        <!-- Loop over each item in the list -->
+        {% for item in last_meals %}
+        <section >
+            <div class="section-title">{{ item.date }}</div>
             <div class="nutrition-info">
                 <div class="nutrition-column">
-                    <p>Total Calories: {{ total_calories }}</p>
-                    <p>Total Fat: {{ total_fats }}g</p>
-                    <p>Total Protein: {{ total_proteins }}g</p>
-                    <p>Total Carbs: {{ total_carbs }}g</p>
+                    <p>Total Calories: {{ item.total_calories | float | round(2)}}</p>
+                    <p>Total Fat: {{ item.total_fats | float | round(2)}}g</p>
+                    <p>Total Protein: {{ item.total_proteins | float | round(2)}}g</p>
+                    <p>Total Carbs: {{ item.total_carbs | float | round(2)}}g</p>
                 </div>
                 <div class="nutrition-column">
-                    <p>Total Cholesterol: {{ total_cholesterol }}mg</p>
-                    <p>Total Sodium: {{ total_sodium }}mg</p>
-                    <p>Total Potassium: {{ total_potassium }}mg</p>
-                    <p>Total Sugar: {{ total_sugar }}g</p>
+                    <p>Total Cholesterol: {{ item.total_cholesterol | float | round(2)}}mg</p>
+                    <p>Total Sodium: {{ item.total_sodium | float | round(2)}}mg</p>
+                    <p>Total Potassium: {{ item.total_potassium | float | round(2)}}mg</p>
+                    <p>Total Sugar: {{ item.total_sugar | float | round(2)}}g</p>
                 </div>
             </div>
         </section>
+        {% endfor %}
     </div>
 </body>
 </html>
