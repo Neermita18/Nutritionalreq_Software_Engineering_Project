@@ -7,13 +7,13 @@ from waitress import serve
 import requests
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db,User, Meals
+from models import db,User, Meals, Details
 import ast
 from sqlalchemy import desc
 from datetime import timedelta
 from sqlalchemy import func
 app= Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/91982/Desktop/SEPROJECT/instance/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/hp/Desktop/python/SE/Nutritionalreq_SE/instance/database.db'
 db.init_app(app)
 app.secret_key='heudbw2735snd0182bdh376ch3865271'
 
@@ -250,5 +250,39 @@ def dashboard():
     for item in last_meals_data[::-1]:
         meals.append(item)
     return render_template('dashboard.html', last_meals=meals)
+
+@app.route('/data')
+def data():
+    return render_template('data.html')
+
+@app.route('/submit', methods=['POST'])
+def submit_data():
+    if request.method == 'POST':
+        age = request.form['age']
+        height = request.form['height']
+        weight = request.form['weight']
+        gender = request.form['gender']
+
+        # Check if the user exists in the details table
+        name = session.get('name')
+        existing_entry = Details.query.filter_by(name=name).first()
+        if existing_entry:
+            # If the user exists, update the existing entry
+            existing_entry.age = age
+            existing_entry.height = height
+            existing_entry.weight = weight
+            existing_entry.gender = gender
+            # Update other fields similarly
+        else:
+            # If the user doesn't exist, create a new entry
+            new_entry = Details(name=name, age=age, height=height,weight=weight,gender=gender)
+            # Add other fields similarly
+            db.session.add(new_entry)
+
+        db.session.commit()
+        return redirect(url_for('dashboard'))
+
+    return render_template('data.html')
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug= True)

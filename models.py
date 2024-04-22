@@ -28,3 +28,17 @@ class Meals(db.Model):
         self.breakfast = breakfast
         self.lunch = lunch
         self.dinner = dinner
+class Details(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    age = db.Column(db.Integer)
+    height = db.Column(db.Float)
+    weight = db.Column(db.Float)
+    gender = db.Column(db.String(10))
+
+    def __init__(self, name, age, height, weight, gender):
+        self.name = name
+        self.age = age
+        self.height = height
+        self.weight = weight
+        self.gender = gender
