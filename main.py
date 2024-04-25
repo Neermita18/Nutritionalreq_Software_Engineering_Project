@@ -7,7 +7,7 @@ from waitress import serve
 import requests
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db,User, Meals, Details
+from models import db,User, Meals, Details, Userdetails
 import ast
 from sqlalchemy import desc
 from datetime import timedelta
@@ -262,20 +262,22 @@ def submit_data():
         height = request.form['height']
         weight = request.form['weight']
         gender = request.form['gender']
+        activity_level = request.form['activity_level']
 
         # Check if the user exists in the details table
         name = session.get('name')
-        existing_entry = Details.query.filter_by(name=name).first()
+        existing_entry = Userdetails.query.filter_by(name=name).first()
         if existing_entry:
             # If the user exists, update the existing entry
             existing_entry.age = age
             existing_entry.height = height
             existing_entry.weight = weight
             existing_entry.gender = gender
+            existing_entry.activity_level = activity_level
             # Update other fields similarly
         else:
             # If the user doesn't exist, create a new entry
-            new_entry = Details(name=name, age=age, height=height,weight=weight,gender=gender)
+            new_entry = Userdetails(name=name, age=age, height=height,weight=weight,gender=gender,activity_level=activity_level)
             # Add other fields similarly
             db.session.add(new_entry)
 
