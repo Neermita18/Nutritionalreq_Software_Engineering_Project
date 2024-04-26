@@ -6,6 +6,7 @@
     <title>Dashboard</title>
     <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jersey+20&family=Micro+5+Charted&display=swap');
         body {
             background-image: url('/static/styles/home2.png'); /* Replace 'background.jpg' with your image file */
             background-size: cover;
@@ -13,6 +14,7 @@
             background-attachment: fixed;
           }
           h4 {
+            height: 200px;
             background: none;
             size: 200px;
             color: white;
@@ -32,7 +34,7 @@
                 width: inherit;
                 position: absolute;
                 top: 140px;
-                right: 400px;
+                right: 375px;
                 padding: 10px;
                 text-align: center;
                 font-family: 'Lucida Sans Unicode';
@@ -68,6 +70,84 @@
                 border-radius: 20px; /* Rounded corners */
                 opacity: 1;
             }
+            .container2 {
+                
+                width: 100%;
+                padding-left: 300px;
+                margin: 0;
+                overflow: hidden;
+                width: 500px;
+                padding-top:110px;
+              
+            }
+           
+            .j{
+                font-family: "Jersey 20", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 30px
+              }
+              .j2{
+                font-family: "Jersey 20", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 25px
+              }
+              .mi {
+                font-family: "Micro 5 Charted", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 37px
+               
+             
+              }
+              .container3 {
+                position: absolute;
+                top: 260px;
+                right: 200px;
+                height:1000px;
+                width: 100%;
+                padding-left: 300px;
+                margin: 0;
+                overflow: hidden;
+                width: 500px;
+                padding-top:110px;
+                text-align: center;
+                
+             
+              
+            }
+            .container3 img {
+                display: block;
+                width: 100%; /* Resize image width to fit container width */
+                height: auto; /* Maintain aspect ratio */
+            }
+            section {
+                margin: 30px 0; 
+                /* background-color: rgba(152, 152, 152, 0.5); */
+                background-color: rgba(170, 192, 226, 0.5);
+                color: #fff;
+                padding: 5px; 
+                border-radius: 10px; /* Rounded corners */
+                width: 418px
+                background-color: rgba(230, 255, 255, 0.7);
+            }
+            h33{
+                background: rgba(249, 244, 244, 0.619);
+                color: #fff;
+                padding-top: 5px;
+                min-height: 0px;
+      
+                width: 100px;
+                border-radius: 15px; 
+                text-align: center;
+                padding-bottom: 5px;
+                padding-right: 5px;
+                padding-left: 5px;
+               
+            }  
+                   
+              
             
 
           
@@ -75,7 +155,7 @@
 </head>
 <body>
     <div class="banner">
-        <h2>Welcome {{name}}! Here's your complete log of nutritional data over a few days.</h2>
+        <h2 class= "j">Welcome {{name}}! Here's your complete log of nutritional data over a few days.</h2>
         <p> </p>
         <h4>Good job, you're doing so well!</h4>
     </div>
@@ -84,9 +164,9 @@
         <a href="register">&ensp;&ensp;&ensp;      Register</a>
         <a href="login">&ensp;&ensp;&ensp;     Login</a>
         <a href="index"><img src="\static\styles\progress.png" alt="P Image" class="dashboard-image">Progress</a>
-        <a href="data">BMI</a>
+        <a href="data">&ensp;&ensp;&ensp; BMI</a>
     </div>
-    <div class="container">
+    <div class="container2">
         <!-- Loop over each item in the list -->
         {% for item in last_meals %}
         <section >
@@ -114,6 +194,29 @@
         <p>{{ bmi | float | round(2) }}</p>
         <div class= "mm">Your BMI Class</div>
         <p> {{prediction}}</p>
+    </div>
+    <div class="container3">
+        
+        <!-- Loop over each item in the list -->
+        {% for item in weights %}
+        <section>
+            <img src="\static\styles\exer.jpg" alt="Banner Image">
+            <div class="section-title">Your Personalized Weight Goals</div>
+            <div class="weight-info">
+                <div class="weight-column">
+                    <p><div class="j2">Want to maintain your weight?</div><br> Consume <h33>{{ item.maintain_weight_calories | float | round(2)}}</h33> calories per day</p>
+                    <div class="mi">Weight Loss</div>
+                    <p><div class="j2">Want to lose 0.25kg per week?</div><br> Consume <h33> {{ item.mild_weight_loss_calories | float | round(2)}}</h33> calories per day</p>
+                    <p><div class="j2">Want to lose 0.5kg per week?</div><br> Consume <h33>{{ item.weight_loss_calories | float | round(2)}}</h33> calories per day</p>
+                    <p><div class="j2">Want to lose 0.75kg per week?</div><br> Consume <h33>{{ item.extreme_weight_loss_calories | float | round(2)}}</h33> calories per day</p>
+                    <div class="mi">Weight Gain</div>
+                    <p><div class="j2">Want to gain 0.25kg per week?</div><br> Consume <h33>{{ item.mild_weight_gain_calories | float | round(2)}}</h33> calories per day</p>
+                    <p><div class="j2">Want to gain 0.5kg per week?</div><br> Consume <h33>{{ item.weight_gain_calories | float | round(2)}}</h33> calories per day</p>
+                    <p><div class="j2">Want to gain 0.75kg per week?</div><br> Consume <h33>{{ item.extreme_weight_gain_calories | float | round(2)}}</h33> calories per day</p>
+                </div>
+            </div>
+        </section>
+        {% endfor %}
     </div>
 </body>
 </html>

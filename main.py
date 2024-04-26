@@ -140,24 +140,52 @@ def store_meal_in_database(meals):
 @app.route('/dashboard', methods=['GET','POST'])
 
 def dashboard():
-    user_name = session.get('name')          
-    current_date = datetime.now().date()
-    start_date = current_date - timedelta(days=7)
-   
-    # Query the database to get the last row for each date in the range
-    last_meals = db.session.query(Meals.date, func.max(Meals.id)).\
-                 filter(Meals.date >= start_date, Meals.date <= current_date, Meals.user_name == user_name).\
-                 group_by(Meals.date).all()
-                 
-                 
+    user_name = session.get('name')    
     bmi=0
-    user_details = db.session.query(Details).filter_by(name=user_name).order_by(Details.id.desc()).first()
+    user_details = db.session.query(Userdetails).filter_by(name=user_name).order_by(Userdetails.id.desc()).first()
     if user_details:
         age = user_details.age
         height= user_details.height
         h= user_details.height / 100  # Convert height to meters
         weight = user_details.weight
         gender = user_details.gender
+        aclev= user_details.activity_level
+        url = "https://fitness-calculator.p.rapidapi.com/dailycalorie"
+
+        querystring = {"age":age,"gender":gender,"height":height,"weight":weight,"activitylevel":aclev}
+
+        headers = {
+                "X-RapidAPI-Key": "8bc4c7e788msh805f2fd04062842p14cac2jsnca0ad7e47526",
+                "X-RapidAPI-Host": "fitness-calculator.p.rapidapi.com"
+        }
+        weights=[]
+        response = requests.get(url, headers=headers, params=querystring)
+        r= response.text
+             
+        datar= json.loads(r)
+        bmr = datar['data']['BMR']
+        
+        maintain_weight_calories = datar['data']['goals']['maintain weight']
+        mild_weight_loss_calories = datar['data']['goals']['Mild weight loss']['calory']
+        weight_loss_calories = datar['data']['goals']['Weight loss']['calory']
+        extreme_weight_loss_calories = datar['data']['goals']['Extreme weight loss']['calory']
+        mild_weight_gain_calories = datar['data']['goals']['Mild weight gain']['calory']
+        weight_gain_calories= datar['data']['goals']['Weight gain']['calory']
+        extreme_weight_gain_calories = datar['data']['goals']['Extreme weight gain']['calory']
+        # weight = [maintain_weight_calories, mild_weight_loss_calories, weight_loss_calories, extreme_weight_loss_calories, mild_weight_gain_calories, weight_gain_calories, extreme_weight_gain_calories]
+        # weights.append(weight)
+        weights.append({
+                'maintain_weight_calories': maintain_weight_calories,
+                'mild_weight_loss_calories': mild_weight_loss_calories,
+                'weight_loss_calories': weight_loss_calories,
+                'extreme_weight_loss_calories': extreme_weight_loss_calories,
+                'mild_weight_gain_calories': mild_weight_gain_calories,
+                'weight_gain_calories': weight_gain_calories,
+                'extreme_weight_gain_calories': extreme_weight_gain_calories,
+            })
+        
+        
+        
         
         # Calculate BMI
         bmi = weight/pow(h,2)
@@ -168,7 +196,37 @@ def dashboard():
         prediction= str(predict).replace('[','').replace(']','').replace('\'','').replace('\"','')
      
     else:
-        bmi = None
+        bmi = "Want to know you BMI? Enter your details"
+        prediction=None
+        weights=None
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+          
+    current_date = datetime.now().date()
+    start_date = current_date - timedelta(days=7)
+   
+    # Query the database to get the last row for each date in the range
+    last_meals = db.session.query(Meals.date, func.max(Meals.id)).\
+                 filter(Meals.date >= start_date, Meals.date <= current_date, Meals.user_name == user_name).\
+                 group_by(Meals.date).all()
+                 
+                 
+   
     #print(last_meals)
     # Initialize a list to store the last meal for each date
     last_meals_data = []    
@@ -259,7 +317,7 @@ def dashboard():
         meals.append(item)
         
     
-    return render_template('dashboard.html', last_meals=meals, bmi=bmi, prediction=prediction, name= user_name)
+    return render_template('dashboard.html', last_meals=meals, bmi=bmi, prediction=prediction, name= user_name, weights=weights)
 
 @app.route('/data')
 def data():

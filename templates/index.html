@@ -6,6 +6,7 @@
     <title>Welcome to CalTrack</title>
     <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jersey+20&family=Micro+5+Charted&display=swap');
         body {
             background-image: url('/static/styles/home2.png'); /* Replace 'background.jpg' with your image file */
             background-size: cover;
@@ -17,11 +18,36 @@
             size: 200px;
             color: white;
           }
+          .banner {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height:85px;
+            background-color:#0b1626 ; 
+            padding-left: 5px;
+            padding-right:2px;
+            z-index: 1000; 
+        }
+        .j2{
+            font-family: "Jersey 20", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 20px
+          }
+          .h4{
+            font-size: 2px;
+            color:white;
+          }
     </style>
 </head>
 <body>
-    <h1 class= "header">Meals constitute a huge part of our daily life. Taking care of what goes inside our bodies should be a must. Let's find out how nutritious your meal was!</h1>
-    <h4 >Enter today's food data :DDDD</h4>
+    <div class="banner">
+        <h4 class= "j2">Welcome to Caltrack! Meals are not just about filling our stomachs; they are about nourishing our bodies and fueling our day. It's important to pay attention to what we eat and ensure that we are providing our bodies with the nutrients they need to thrive.</h4>
+
+    </div>
+    <br>
+    
+    
     <br>
     <br>
     <div class="sidenav">
@@ -29,6 +55,7 @@
         <a href="register">&ensp;&ensp;&ensp;      Register</a>
         <a href="login">&ensp;&ensp;&ensp;     Login</a>
         <a href="index"><img src="\static\styles\progress.png" alt="P Image" class="dashboard-image">Progress</a>
+        <a href="data">&ensp;&ensp;&ensp; BMI</a>
     </div>
     <div class="container">
         <!-- breakfast -->
@@ -40,7 +67,7 @@
                 </div>
                 <div class="input-group">
                     <label for="breakfast-input">Enter your breakfast items:</label>
-                    <input type="text" id="breakfast-input" name="breakfast" placeholder="2 eggs, toast with butter">
+                    <input type="text" id="breakfast-input" name="breakfast" placeholder="2 eggs, 2 toasts with butter">
                 </div>
                 <div class="button-container"> <!-- Button container added -->
                     <button type="submit">Let's go</button>
@@ -57,7 +84,7 @@
                 </div>
                 <div class="input-group">
                     <label for="lunch-input">Enter your lunch items:</label>
-                    <input type="text" id="lunch-input" name="lunch" placeholder="Chicken salad">
+                    <input type="text" id="lunch-input" name="lunch" placeholder="1 plate of Chicken salad">
                 </div>
                 <div class="button-container"> <!-- Button container added -->
                     <button type="submit">Let's go</button>
@@ -74,7 +101,7 @@
                 </div>
                 <div class="input-group">
                     <label for="dinner-input">Enter your dinner items:</label>
-                    <input type="text" id="dinner-input" name="dinner" placeholder="Grilled salmon, quinoa">
+                    <input type="text" id="dinner-input" name="dinner" placeholder="2 pieces of Grilled salmon, 1 bowl of quinoa">
                 </div>
                 <div class="button-container"> <!-- Button container added -->
                     <button type="submit">Let's go</button>
@@ -82,10 +109,7 @@
             </section>
         </form>
 
-        <!-- Button to Check Nutrition Levels -->
-        <div class="check-nutrition">
-            <a href="{{ url_for('dashboard') }}" class="check-nutrition-btn">Check Nutrition Levels</a>
-        </div>
+        <h4 class="j2"> Please provide the specific amount of each food consumed to retrieve accurate results!</h4>
     </div>
 </body>
 </html>

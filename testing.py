@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.inspection import inspect
 from models import db, Meals
-from models import Details
+from models import Userdetails
 from flask import Flask
 import json
 import ast
@@ -22,22 +22,23 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/91982/Desktop/SEPROJ
 db.init_app(app)
 with app.app_context():
         bmi=0
-        user_details = db.session.query(Details).filter_by(name='Nemo').order_by(Details.id.desc()).first()
+        user_details = db.session.query(Userdetails).filter_by(name='Nemo').order_by(Userdetails.id.desc()).first()
         if user_details:
                 age = user_details.age
-                height = user_details.height/100 
+                height = user_details.height
                 weight = user_details.weight
                 gender = user_details.gender
+                aclev= user_details.activity_level
                 print(type(age))
         # Calculate BMI
-                bmi = weight/pow(height,2)
+                bmi = weight/pow(height/100,2)
                 print(bmi)     
                 test=[[age, height, weight, bmi]]
                 
                 #another api call
                 url = "https://fitness-calculator.p.rapidapi.com/dailycalorie"
 
-                querystring = {"age":age,"gender":gender,"height":height,"weight":weight,"activitylevel":"level_1"}
+                querystring = {"age":age,"gender":gender,"height":height,"weight":weight,"activitylevel":aclev}
 
                 headers = {
                 "X-RapidAPI-Key": "8bc4c7e788msh805f2fd04062842p14cac2jsnca0ad7e47526",
@@ -45,8 +46,23 @@ with app.app_context():
                 }
 
                 response = requests.get(url, headers=headers, params=querystring)
+                r= response.text
+                print(r)
+                datar= json.loads(r)
+                bmr = datar['data']['BMR']
+                print(bmr)
+                maintain_weight_calories = datar['data']['goals']['maintain weight']
+                mild_weight_loss_calories = datar['data']['goals']['Mild weight loss']['calory']
+                weight_loss_calories = datar['data']['goals']['Weight loss']['calory']
+                extreme_weight_loss_calories = datar['data']['goals']['Extreme weight loss']['calory']
+                mild_weight_gain_calories = datar['data']['goals']['Mild weight gain']['calory']
+                weight_gain_calories= datar['data']['goals']['Weight gain']['calory']
+                extreme_weight_gain_calories = datar['data']['goals']['Extreme weight gain']['calory']
+                print(maintain_weight_calories, mild_weight_loss_calories,weight_loss_calories, extreme_weight_loss_calories, mild_weight_gain_calories, weight_gain_calories,extreme_weight_gain_calories)
+                     
+                
 
-                print(response.json())
+       
         pickled_model = pickle.load(open('svm.pkl', 'rb'))
         p=(pickled_model.predict(test))
         print(type(p))
