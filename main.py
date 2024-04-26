@@ -15,7 +15,7 @@ from sqlalchemy import func
 import pickle
 import numpy as np
 app= Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/91982/Desktop/SEPROJECT/instance/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/hp/Desktop/python/SE/Nutritionalreq_SE/instance/database.db'
 db.init_app(app)
 app.secret_key='heudbw2735snd0182bdh376ch3865271'
 
@@ -50,11 +50,16 @@ def register():
         new_user = User(name=name,email=email,password=password)
         db.session.add(new_user)
         db.session.commit()
-        return redirect('/login')
+        return redirect('/succreglog')
 
 
 
     return render_template('register.html')
+
+@app.route('/succreglog')
+def succreglog():
+    # Render registration success page
+    return render_template('succreglog.html')
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -70,10 +75,14 @@ def login():
             
             return redirect('/index')
         else:
-            return render_template('login.html',error='Invalid user')
+            return render_template('login_error.html')
 
     return render_template('login.html')
 
+@app.route('/login_error')
+def login_error():
+    # Render login error page
+    return render_template('login_error.html')
 
 @app.route('/index')
 def index():
