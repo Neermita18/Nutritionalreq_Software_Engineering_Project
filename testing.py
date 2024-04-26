@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.inspection import inspect
 from models import db, Meals
+from models import Details
 from flask import Flask
 import json
 import ast
@@ -11,15 +12,54 @@ from datetime import datetime
 from sqlalchemy import desc
 from sqlalchemy import func
 from datetime import timedelta
-
+import pickle
+import requests
+import numpy as np
 
 # Initialize Flask app
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/91982/Desktop/SEPROJECT/instance/database.db'
 db.init_app(app)
+with app.app_context():
+        bmi=0
+        user_details = db.session.query(Details).filter_by(name='Nemo').order_by(Details.id.desc()).first()
+        if user_details:
+                age = user_details.age
+                height = user_details.height/100 
+                weight = user_details.weight
+                gender = user_details.gender
+                print(type(age))
+        # Calculate BMI
+                bmi = weight/pow(height,2)
+                print(bmi)     
+                test=[[age, height, weight, bmi]]
+                
+                #another api call
+                url = "https://fitness-calculator.p.rapidapi.com/dailycalorie"
 
+                querystring = {"age":age,"gender":gender,"height":height,"weight":weight,"activitylevel":"level_1"}
+
+                headers = {
+                "X-RapidAPI-Key": "8bc4c7e788msh805f2fd04062842p14cac2jsnca0ad7e47526",
+                "X-RapidAPI-Host": "fitness-calculator.p.rapidapi.com"
+                }
+
+                response = requests.get(url, headers=headers, params=querystring)
+
+                print(response.json())
+        pickled_model = pickle.load(open('svm.pkl', 'rb'))
+        p=(pickled_model.predict(test))
+        print(type(p))
+        predic=np.array_str(p) 
+        predict= str(predic).replace('[','').replace(']','').replace('\'','').replace('\"','')
+        print(predict)
+        
+        
+        
 # Create a Flask app context
 with app.app_context():
+  
+  
     # Fetch all meals from the database
     current_date = datetime.now().date()
     start_date = current_date - timedelta(days=7)
@@ -120,6 +160,7 @@ with app.app_context():
                 'total_sugar': sugar
             })
         meals=[]
+       
 print((last_meals_data))
 print(last_meals_data[0]['date'])
 print(len(last_meals_data))
@@ -127,3 +168,4 @@ for item in last_meals_data[::-1]:
         meals.append(item)
         
 print(meals)
+

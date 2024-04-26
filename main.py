@@ -12,8 +12,10 @@ import ast
 from sqlalchemy import desc
 from datetime import timedelta
 from sqlalchemy import func
+import pickle
+import numpy as np
 app= Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/hp/Desktop/python/SE/Nutritionalreq_SE/instance/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/91982/Desktop/SEPROJECT/instance/database.db'
 db.init_app(app)
 app.secret_key='heudbw2735snd0182bdh376ch3865271'
 
@@ -106,23 +108,7 @@ def process_meal():
             # return redirect('/process_meal')  # Redirect to another page
         session['meals']=meals    
         session.modified= True
-        
-        # if all(meals.values()) and 'check_nutrition' in request.form:
-        #     # Store meal information in the database
-        #     date = datetime.now().date()  # Get the current date
-        #     # user_id = session.get('user_id')  # Assuming user_id is stored in the session
-
-        #     new_meal = Meals(date=date, breakfast=meals['breakfast'], lunch=meals['lunch'], dinner=meals['dinner'])
-        #     db.session.add(new_meal)
-        #     db.session.commit()
-            
-        #     flash('Meals information stored successfully!')
-        #     session.pop('meals', None)  # Clear the stored meals from the session
-
-        #     return redirect('/process_meal')
-        
-        
-        
+ 
     return render_template(
         "process_meal.html",
         bitems= meals['breakfast'],
@@ -154,13 +140,35 @@ def store_meal_in_database(meals):
 @app.route('/dashboard', methods=['GET','POST'])
 
 def dashboard():
+    user_name = session.get('name')          
     current_date = datetime.now().date()
     start_date = current_date - timedelta(days=7)
-    user_name = session.get('name')
+   
     # Query the database to get the last row for each date in the range
     last_meals = db.session.query(Meals.date, func.max(Meals.id)).\
                  filter(Meals.date >= start_date, Meals.date <= current_date, Meals.user_name == user_name).\
                  group_by(Meals.date).all()
+                 
+                 
+    bmi=0
+    user_details = db.session.query(Details).filter_by(name=user_name).order_by(Details.id.desc()).first()
+    if user_details:
+        age = user_details.age
+        height= user_details.height
+        h= user_details.height / 100  # Convert height to meters
+        weight = user_details.weight
+        gender = user_details.gender
+        
+        # Calculate BMI
+        bmi = weight/pow(h,2)
+        test=[[age, h, weight, bmi]]
+        pickled_model = pickle.load(open('svm.pkl', 'rb'))
+        predic=pickled_model.predict(test)
+        predict=np.array_str(predic) 
+        prediction= str(predict).replace('[','').replace(']','').replace('\'','').replace('\"','')
+     
+    else:
+        bmi = None
     #print(last_meals)
     # Initialize a list to store the last meal for each date
     last_meals_data = []    
@@ -249,7 +257,9 @@ def dashboard():
         meals=[]
     for item in last_meals_data[::-1]:
         meals.append(item)
-    return render_template('dashboard.html', last_meals=meals)
+        
+    
+    return render_template('dashboard.html', last_meals=meals, bmi=bmi, prediction=prediction, name= user_name)
 
 @app.route('/data')
 def data():
@@ -284,7 +294,7 @@ def submit_data():
         db.session.commit()
         return redirect(url_for('dashboard'))
 
-    return render_template('data.html')
+    return render_template('dashboard.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug= True)

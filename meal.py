@@ -39,22 +39,34 @@ def get_req(food):
         return foodlist
     else:
         print("Error:", response.status_code, response.text)
- 
+def calories():
+    url = "https://fitness-calculator.p.rapidapi.com/dailycalorie"
+
+    querystring = {"age":"20","gender":"female","height":"158","weight":"53","activitylevel":"level_1"}
+
+    headers = {
+	"X-RapidAPI-Key": "8bc4c7e788msh805f2fd04062842p14cac2jsnca0ad7e47526",
+	"X-RapidAPI-Host": "fitness-calculator.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+
+    print(response.json())
 
 
     # Pass calculated totals to the template for rendering
     
 if __name__ == "__main__":
      
-    print('\n Get nutritional requirements\n')
-    food= input("\n Enter food")
-    items= get_req(food)
+    # print('\n Get nutritional requirements\n')
+    # food= input("\n Enter food")
+    # items= get_req(food)
   
-    print("\n")
-    print(items)
-    for item in items:
-       print(item)
-  
+    # print("\n")
+    # print(items)
+    # for item in items:
+    #    print(item)
+    calories()
     
     # pprint(food_nutrition)S
     
