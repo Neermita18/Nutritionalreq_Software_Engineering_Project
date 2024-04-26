@@ -15,7 +15,7 @@ from sqlalchemy import func
 import pickle
 import numpy as np
 app= Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/hp/Desktop/python/SE/Nutritionalreq_SE/instance/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/91982/Desktop/SEPROJECT/instance/database.db'
 db.init_app(app)
 app.secret_key='heudbw2735snd0182bdh376ch3865271'
 
@@ -209,22 +209,7 @@ def dashboard():
         prediction=None
         weights=None
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
           
     current_date = datetime.now().date()
     start_date = current_date - timedelta(days=7)
@@ -324,6 +309,8 @@ def dashboard():
         meals=[]
     for item in last_meals_data[::-1]:
         meals.append(item)
+    if not meals:
+        meals= None
         
     
     return render_template('dashboard.html', last_meals=meals, bmi=bmi, prediction=prediction, name= user_name, weights=weights)

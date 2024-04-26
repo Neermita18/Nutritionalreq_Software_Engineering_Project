@@ -171,6 +171,9 @@
         <a href="data">&ensp;&ensp;&ensp; BMI</a>
     </div>
     <div class="container2">
+        {% if not last_meals %}
+    <h5> Please enter at least one complete meal (breakfast, lunch and dinner items) </h5>
+    {% endif%}
         <!-- Loop over each item in the list -->
         {% for item in last_meals %}
         <section >
@@ -192,6 +195,7 @@
         </section>
         {% endfor %}
     </div>
+   
     <div class="bmi-container">
         {% if bmi %}
         <div class= "mm">Your BMI</div>
