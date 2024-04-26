@@ -145,7 +145,11 @@
                 padding-right: 5px;
                 padding-left: 5px;
                
-            }  
+            } 
+            h5{
+                text-align:center;
+                color: white;
+            }
                    
               
             
@@ -189,14 +193,20 @@
         {% endfor %}
     </div>
     <div class="bmi-container">
-       
+        {% if bmi %}
         <div class= "mm">Your BMI</div>
         <p>{{ bmi | float | round(2) }}</p>
         <div class= "mm">Your BMI Class</div>
         <p> {{prediction}}</p>
-    </div>
-    <div class="container3">
+        {% endif %}
         
+    </div>
+    {%if not prediction %}
+    <h5> Want to check out your BMI and personalized weight goals? Move to BMI and enter your details! </h5>
+    {% endif %}
+    
+    <div class="container3">
+        {% if weights %}
         <!-- Loop over each item in the list -->
         {% for item in weights %}
         <section>
@@ -217,6 +227,7 @@
             </div>
         </section>
         {% endfor %}
+        {% endif %}
     </div>
 </body>
 </html>
